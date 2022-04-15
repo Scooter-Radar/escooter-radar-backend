@@ -26,6 +26,10 @@ class ScooterService(private val db: ScooterRepository) {
             findBird(zone)?.let { scooters.addAll(it) }
         } catch (ex: Exception) { }
 
+        try {
+            findSpin(zone)?.let { scooters.addAll(it) }
+        } catch (ex: Exception) { }
+
         db.saveAll(scooters)
         return db.findAll()
     }
@@ -48,6 +52,13 @@ class ScooterService(private val db: ScooterRepository) {
         val uri = "https://gbfs.getapony.com/v1/${zone}/en/free_bike_status.json"
         val response = restTemplate.getForEntity(uri, ScooterProviderJson::class.java)
         addCompany(response.body?.data?.bikes!!, "Pony")
+        return response.body?.data?.bikes
+    }
+
+    private fun findSpin(zone: String): Array<Scooter>? {
+        val uri = "https://gbfs.spin.pm/api/gbfs/v2_2/${zone}/free_bike_status"
+        val response = restTemplate.getForEntity(uri, ScooterProviderJson::class.java)
+        addCompany(response.body?.data?.bikes!!, "Spin")
         return response.body?.data?.bikes
     }
 
