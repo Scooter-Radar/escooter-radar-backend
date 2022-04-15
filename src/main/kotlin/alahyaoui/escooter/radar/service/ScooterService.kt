@@ -12,7 +12,7 @@ import org.springframework.web.client.RestTemplate
 
 @Service
 class ScooterService(private val db: ScooterRepository, private val restTemplate: RestTemplate) {
-    fun getAllScootersBy(zone: String): MutableIterable<Scooter> {
+    fun getAllScootersBy(zone: String): Iterable<Scooter> {
         val scooters = mutableListOf<Scooter>()
         findLime(zone)?.let { scooters.addAll(it) }
         findBird(zone)?.let { scooters.addAll(it) }
