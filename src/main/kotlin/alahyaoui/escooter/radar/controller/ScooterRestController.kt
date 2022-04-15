@@ -15,7 +15,7 @@ import org.springframework.web.server.ResponseStatusException
 class ScooterRestController(private val scooterService: ScooterService) {
 
     @GetMapping("/{zone}")
-    fun getScooters(@PathVariable zone: String): MutableIterable<Scooter> {
+    fun getScooters(@PathVariable zone: String): Iterable<Scooter> {
         return scooterService.getAllScootersBy(zone)
     }
 }
