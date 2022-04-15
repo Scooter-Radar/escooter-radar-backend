@@ -30,9 +30,11 @@ class Scooter (
 
     @JsonProperty("current_range_meters")
     var currentRangeMeters: Double,
-
 ){
     @Id
     @GeneratedValue
     var id: UUID? = null
+
+    @JsonProperty("company")
+    lateinit var company: String
 }
