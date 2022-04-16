@@ -1,5 +1,9 @@
 # Introduction
-Readme under construction 🚧
+
+Scooter-Radar is a software application suite that allows you to track available scooters from various electric scooter sharing companies in your area.
+This is the backend
+
+This repository contains all code for the Scooter Radar Backend.
 
 # Description
 
@@ -32,7 +36,7 @@ $ gradle bootrun
 ```
 
 # Usage
-After running the command above go to https://localhost:8080/api/scooter/<city>
+After running the command above go to https://localhost:8080/api/scooter/<**city**>
 > **city** being the name of the area or city where you want to get the scooters.
   
 # Featured
