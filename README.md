@@ -32,6 +32,8 @@ $ git clone git@github.com:Scooter-Radar/escooter-radar-backend.git
 # Execution
 You need gradle installed and added to your PATH environment variables.
 If its not, download gradle <a href="https://gradle.org/install/">here</a>
+
+In the project directory, you can run:
 ```
 $ gradle bootrun
 ```
