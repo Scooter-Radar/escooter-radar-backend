@@ -1,9 +1,10 @@
 # Introduction
 
-Scooter-Radar is a software application suite that allows you to track available scooters from various electric scooter sharing companies in your area.
-This is the backend
+### Scooter-Radar 
+Scooter Radar is a software application suite that allows you to track available scooters from various electric scooter sharing companies in your area.
 
-This repository contains all code for the Scooter Radar Backend.
+### escooter-radar-backend
+Escooter Radar Backend is the backend of Scooter Radar
 
 # Description
 
