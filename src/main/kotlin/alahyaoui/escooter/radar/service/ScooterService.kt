@@ -31,7 +31,7 @@ class ScooterService(private val db: ScooterRepository) {
         } catch (ex: Exception) { }
 
         db.saveAll(scooters)
-        return db.findAll()
+        return db.findAllAvailable()
     }
 
     private fun findLime(zone: String): Array<Scooter>? {
