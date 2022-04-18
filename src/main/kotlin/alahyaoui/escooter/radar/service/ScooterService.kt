@@ -31,39 +31,40 @@ class ScooterService(private val db: ScooterRepository) {
         } catch (ex: Exception) { }
 
         db.saveAll(scooters)
-        return db.findAllAvailable()
+        return db.findAllAvailableByZone(zone)
     }
 
     private fun findLime(zone: String): Array<Scooter>? {
         val uri = "https://data.lime.bike/api/partners/v2/gbfs/${zone}/free_bike_status.json"
         val response = restTemplate.getForEntity(uri, ScooterProviderJson::class.java)
-        addCompany(response.body?.data?.bikes!!, "Lime")
+        addZoneAndCompany(response.body?.data?.bikes!!, zone,"Lime")
         return response.body?.data?.bikes
     }
 
     private fun findBird(zone: String): Array<Scooter>? {
         val uri = "https://mds.bird.co/gbfs/v2/public/${zone}/free_bike_status.json"
         val response = restTemplate.getForEntity(uri, ScooterProviderJson::class.java)
-        addCompany(response.body?.data?.bikes!!, "Bird")
+        addZoneAndCompany(response.body?.data?.bikes!!, zone,"Bird")
         return response.body?.data?.bikes
     }
 
     private fun findPony(zone: String): Array<Scooter>? {
         val uri = "https://gbfs.getapony.com/v1/${zone}/en/free_bike_status.json"
         val response = restTemplate.getForEntity(uri, ScooterProviderJson::class.java)
-        addCompany(response.body?.data?.bikes!!, "Pony")
+        addZoneAndCompany(response.body?.data?.bikes!!, zone,"Pony")
         return response.body?.data?.bikes
     }
 
     private fun findSpin(zone: String): Array<Scooter>? {
         val uri = "https://gbfs.spin.pm/api/gbfs/v2_2/${zone}/free_bike_status"
         val response = restTemplate.getForEntity(uri, ScooterProviderJson::class.java)
-        addCompany(response.body?.data?.bikes!!, "Spin")
+        addZoneAndCompany(response.body?.data?.bikes!!, zone,"Spin")
         return response.body?.data?.bikes
     }
 
-    private fun addCompany(scooters: Array<Scooter>, company: String) {
+    private fun addZoneAndCompany(scooters: Array<Scooter>, zone: String, company: String) {
         for (i in scooters.indices!!) {
+            scooters[i].zone = zone
             scooters[i].company = company
         }
     }

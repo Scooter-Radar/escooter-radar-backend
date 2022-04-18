@@ -2,14 +2,27 @@ package alahyaoui.escooter.radar.entity
 
 import com.fasterxml.jackson.annotation.JsonInclude
 import com.fasterxml.jackson.annotation.JsonProperty
+import java.io.Serializable
 import java.util.UUID
 import javax.persistence.Entity
 import javax.persistence.GeneratedValue
 import javax.persistence.Id
+import javax.persistence.IdClass
+
+class ScooterId: Serializable {
+    @JsonProperty("bike_id")
+    lateinit var bikeId: String
+
+    @Id
+    @JsonProperty("company")
+    lateinit var company: String
+}
 
 @Entity
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
-class Scooter (
+@IdClass(ScooterId::class)
+class Scooter(
+    @Id
     @JsonProperty("bike_id")
     var bikeId: String,
 
@@ -30,11 +43,11 @@ class Scooter (
 
     @JsonProperty("current_range_meters")
     var currentRangeMeters: Double,
-){
+) {
     @Id
-    @GeneratedValue
-    var id: UUID? = null
-
     @JsonProperty("company")
     lateinit var company: String
+
+    @JsonProperty("zone")
+    lateinit var zone: String
 }
