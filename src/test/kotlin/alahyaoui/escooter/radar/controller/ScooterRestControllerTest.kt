@@ -28,7 +28,7 @@ class ScooterRestControllerTest(@Autowired val mockMvc: MockMvc) {
         mockMvc.perform(get("/api/scooter/brussels").accept(MediaType.APPLICATION_JSON))
             .andExpect(status().isOk)
             .andExpect(content().contentType(MediaType.APPLICATION_JSON))
-            .andExpect(jsonPath("\$.[0].id").value(scooterPony.id))
-            .andExpect(jsonPath("\$.[1].id").value(scooterLime.id))
+            .andExpect(jsonPath("\$.[0].id").value(scooterPony.bikeId))
+            .andExpect(jsonPath("\$.[1].id").value(scooterLime.bikeId))
     }
 }
