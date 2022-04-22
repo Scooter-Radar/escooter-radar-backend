@@ -16,6 +16,6 @@ class ScooterRestController(private val scooterService: ScooterService) {
 
     @GetMapping("/location")
     fun getScootersByLocationWithinDegree(@RequestParam latitude: Double, @RequestParam longitude: Double, @RequestParam degree: Double): Iterable<Scooter> {
-        return scooterService.findNear(latitude, longitude, degree)
+        return scooterService.findByLocationWithinDegree(latitude, longitude, degree)
     }
 }

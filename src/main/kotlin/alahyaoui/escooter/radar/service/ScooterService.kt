@@ -12,12 +12,9 @@ class ScooterService(private val db: ScooterRepository) {
 
     private val restTemplate = RestTemplate()
 
-    fun findNear(latitude: Double, longitude: Double): Iterable<Scooter> {
-        return db.findAllByDistanceFromLocation(latitude, longitude)
-    }
 
-    fun findNear(latitude: Double, longitude: Double, distance: Double): Iterable<Scooter> {
-        return db.findAllByDistanceFromLocation(latitude, longitude, distance)
+    fun findByLocationWithinDegree(latitude: Double, longitude: Double, degree: Double): Iterable<Scooter> {
+        return db.findAvailableByLocationWithinDegree(latitude, longitude, degree)
     }
 
     fun getAllScootersBy(zone: String): Iterable<Scooter> {
