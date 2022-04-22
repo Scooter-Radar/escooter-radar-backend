@@ -1,6 +1,6 @@
 package alahyaoui.escooter.radar.entity
 
-import alahyaoui.escooter.radar.util.ScooterPonyDto
+import alahyaoui.escooter.radar.util.ScooterDto
 import com.bedatadriven.jackson.datatype.jts.serialization.GeometryDeserializer
 import com.bedatadriven.jackson.datatype.jts.serialization.GeometrySerializer
 import com.fasterxml.jackson.annotation.JsonInclude
@@ -36,16 +36,6 @@ class Scooter(
     @Column(name = "bike_id")
     var bikeId: String,
 
-   // @JsonProperty("lat")
-    //@Column(name = "lat")
-   // @Transient
-   // var latitude: Double,
-
-   // @JsonProperty("lon")
-    //@Column(name = "lon")
-   // @Transient
-   // var longitude: Double,
-
     @JsonProperty("is_disabled")
     @Column(name = "is_disabled")
     var isDisabled: Boolean,
@@ -71,26 +61,16 @@ class Scooter(
     @Column(name = "zone")
     lateinit var zone: String
 
-    //@Column (name="location", columnDefinition="geometry(Point,4326)", nullable=true)
     @JsonProperty("location")
-    @Column(name="location", columnDefinition = "geography")
+    @Column(name="location", columnDefinition = "geometry(Point,4326)")
+    @JsonSerialize(using = GeometrySerializer::class)
+    @JsonDeserialize(contentUsing = GeometryDeserializer::class)
     lateinit var location : Point
 
-    constructor(scooter: ScooterPonyDto, zone:String, company:String) : this(scooter.bikeId, scooter.isDisabled,  scooter.isReserved, scooter.lastReported, scooter.currentRangeMeters) {
+    constructor(scooter: ScooterDto, zone:String, company:String) : this(scooter.bikeId, scooter.isDisabled, scooter.isReserved, scooter.lastReported, scooter.currentRangeMeters) {
         this.zone = zone
         this.company = company
         val geometryFactory = GeometryFactory(PrecisionModel(), 4326)
         this.location = geometryFactory.createPoint(Coordinate(scooter.longitude, scooter.latitude))
     }
-
 }
-
-//    @JsonSerialize(using = GeometrySerializer::class)
-//    @JsonDeserialize(contentUsing = GeometryDeserializer::class)
-//    @Column(columnDefinition = "geography")
-
-//private val factory: GeometryFactory = GeometryFactory(PrecisionModel(), 4326)
-// Point(Coordinate(longitude, latitude), PrecisionModel(), 4326)
-//@Type(type = "org.hibernate.spatial.JTSGeometryType")
-
-//    //@Column(columnDefinition = "Geometry", nullable = true)
