@@ -24,14 +24,29 @@ repositories {
 }
 
 dependencies {
+	implementation("org.jetbrains.kotlin:kotlin-reflect")
+	implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
+
+	// Hibernate Dependencies
+	implementation("org.hibernate:hibernate-spatial")
+
+	// Postgis Dependencies
+	implementation("net.postgis:postgis-jdbc:2021.1.0")
+
+	// JTS Dependencies
+	implementation("org.locationtech.jts:jts-core:1.16.0")
+
+	// Jackson Dependencies
+	implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
+	implementation("com.graphhopper.external:jackson-datatype-jts:0.10-2.5-1")
+
+	// Spring Boot dependencies
 	implementation("org.springframework.boot:spring-boot-starter-data-jpa")
 	implementation("org.springframework.boot:spring-boot-starter-mustache")
 	implementation("org.springframework.boot:spring-boot-starter-web")
-	implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
-	implementation("org.jetbrains.kotlin:kotlin-reflect")
-	implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
 	developmentOnly("org.springframework.boot:spring-boot-devtools")
-	runtimeOnly("com.h2database:h2")
+
+	// Test Dependencies
 	testImplementation("org.springframework.boot:spring-boot-starter-test")
 	testImplementation("org.springframework.boot:spring-boot-starter-test") {
 		exclude(module = "junit")
