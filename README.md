@@ -29,6 +29,13 @@ With a ssh key:
 $ git clone git@github.com:Scooter-Radar/escooter-radar-backend.git
 ```
 
+Launch docker compose:  
+You need docker installed and added to your PATH environment variables.
+If its not, download docker <a href="https://docs.docker.com/get-docker/">here</a>
+```
+$ docker-compose up -d
+```
+
 # Execution
 You need gradle installed and added to your PATH environment variables.
 If its not, download gradle <a href="https://gradle.org/install/">here</a>
