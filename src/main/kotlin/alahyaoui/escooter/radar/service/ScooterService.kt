@@ -12,6 +12,9 @@ class ScooterService(private val db: ScooterRepository) {
 
     private val restTemplate = RestTemplate()
 
+    fun findByCompany(company: String): Iterable<Scooter> {
+        return db.findAllAvailableByCompany(company)
+    }
 
     fun findByLocationWithinDegree(latitude: Double, longitude: Double, degree: Double): Iterable<Scooter> {
         return db.findAvailableByLocationWithinDegree(latitude, longitude, degree)
