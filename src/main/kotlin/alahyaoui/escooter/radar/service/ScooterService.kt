@@ -13,73 +13,73 @@ class ScooterService(private val db: ScooterRepository) {
     private val restTemplate = RestTemplate()
 
     fun findByCompany(company: String): Iterable<Scooter> {
-        return db.findAllAvailableByCompany(company)
+        return db.findAvailableByCompany(company)
     }
 
     fun findByLocationWithinDegree(latitude: Double, longitude: Double, degree: Double): Iterable<Scooter> {
         return db.findAvailableByLocationWithinDegree(latitude, longitude, degree)
     }
 
-    fun getAllScootersBy(zone: String): Iterable<Scooter> {
+    fun findByCity(city: String): Iterable<Scooter> {
         val scooters = mutableListOf<Scooter>()
 
         try {
-            findPony(zone)?.let { scooters.addAll(it) }
+            findPony(city)?.let { scooters.addAll(it) }
         } catch (ex: Exception) {
             println(ex.message)
         }
 
         try {
-            findLime(zone)?.let { scooters.addAll(it) }
+            findLime(city)?.let { scooters.addAll(it) }
         } catch (ex: Exception) {
             println(ex.message)
         }
 
         try {
-            findBird(zone)?.let { scooters.addAll(it) }
+            findBird(city)?.let { scooters.addAll(it) }
         } catch (ex: Exception) {
             println(ex.message)
         }
 
         try {
-            findSpin(zone)?.let { scooters.addAll(it) }
+            findSpin(city)?.let { scooters.addAll(it) }
         } catch (ex: Exception) {
             println(ex.message)
         }
 
         db.saveAll(scooters)
-        return db.findAllAvailableByZone(zone)
+        return db.findAvailableByCity(city)
     }
 
-    private fun findLime(zone: String): Iterable<Scooter> {
-        val uri = "https://data.lime.bike/api/partners/v2/gbfs/${zone}/free_bike_status.json"
+    private fun findLime(city: String): Iterable<Scooter> {
+        val uri = "https://data.lime.bike/api/partners/v2/gbfs/${city}/free_bike_status.json"
         val response = restTemplate.getForEntity(uri, ScooterProviderJson::class.java)
-        return convertScooterDtoToScooter(response.body?.data?.bikes, zone, "Lime")
+        return convertScooterDtoToScooter(response.body?.data?.bikes, city, "Lime")
     }
 
-    private fun findBird(zone: String): Iterable<Scooter> {
-        val uri = "https://mds.bird.co/gbfs/v2/public/${zone}/free_bike_status.json"
+    private fun findBird(city: String): Iterable<Scooter> {
+        val uri = "https://mds.bird.co/gbfs/v2/public/${city}/free_bike_status.json"
         val response = restTemplate.getForEntity(uri, ScooterProviderJson::class.java)
-        return convertScooterDtoToScooter(response.body?.data?.bikes, zone, "Bird")
+        return convertScooterDtoToScooter(response.body?.data?.bikes, city, "Bird")
     }
 
-    private fun findPony(zone: String): Iterable<Scooter> {
-        val uri = "https://gbfs.getapony.com/v1/${zone}/en/free_bike_status.json"
+    private fun findPony(city: String): Iterable<Scooter> {
+        val uri = "https://gbfs.getapony.com/v1/${city}/en/free_bike_status.json"
         val response = restTemplate.getForEntity(uri, ScooterProviderJson::class.java)
-        return convertScooterDtoToScooter(response.body?.data?.bikes, zone, "Pony")
+        return convertScooterDtoToScooter(response.body?.data?.bikes, city, "Pony")
     }
 
-    private fun findSpin(zone: String): Iterable<Scooter> {
-        val uri = "https://gbfs.spin.pm/api/gbfs/v2_2/${zone}/free_bike_status"
+    private fun findSpin(city: String): Iterable<Scooter> {
+        val uri = "https://gbfs.spin.pm/api/gbfs/v2_2/${city}/free_bike_status"
         val response = restTemplate.getForEntity(uri, ScooterProviderJson::class.java)
-        return convertScooterDtoToScooter(response.body?.data?.bikes, zone, "Spin")
+        return convertScooterDtoToScooter(response.body?.data?.bikes, city, "Spin")
     }
 
-    private fun convertScooterDtoToScooter(scootersDto: Array<ScooterDto>?, zone: String, company: String): Iterable<Scooter>{
+    private fun convertScooterDtoToScooter(scootersDto: Array<ScooterDto>?, city: String, company: String): Iterable<Scooter>{
         val scooters = mutableListOf<Scooter>()
         if (scootersDto != null) {
             for(scooter in scootersDto){
-                scooters.add(Scooter(scooter, zone, company))
+                scooters.add(Scooter(scooter, city, company))
             }
         }
         return scooters
