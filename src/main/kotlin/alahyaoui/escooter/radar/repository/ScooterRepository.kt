@@ -16,6 +16,9 @@ interface ScooterRepository : JpaRepository<Scooter, ScooterId> {
     @Query("SELECT s FROM Scooter s WHERE s.zone = :zone AND s.isDisabled = false AND s.isReserved = false")
     fun findAllAvailableByZone(zone: String): Iterable<Scooter>
 
+    @Query("SELECT s FROM Scooter s WHERE LOWER(s.company) LIKE LOWER(:company) AND s.isDisabled = false AND s.isReserved = false")
+    fun findAllAvailableByCompany(company: String): Iterable<Scooter>
+
     @Query(
         value = "SELECT * " +
                 "FROM Scooter " +
