@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.*
 @RequestMapping("/api/scooter")
 class ScooterRestController(private val scooterService: ScooterService) {
 
-    @GetMapping("")
+    @GetMapping("/provider")
     fun getScootersByCompany(@RequestParam company: String): Iterable<Scooter> {
         return scooterService.findByCompany(company.toSlug())
     }
