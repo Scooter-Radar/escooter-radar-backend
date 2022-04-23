@@ -59,7 +59,7 @@ class Scooter(
 
     @JsonProperty("zone")
     @Column(name = "zone")
-    lateinit var zone: String
+    lateinit var city: String
 
     @JsonProperty("location")
     @Column(name="location", columnDefinition = "geometry(Point,4326)")
@@ -67,8 +67,8 @@ class Scooter(
     @JsonDeserialize(contentUsing = GeometryDeserializer::class)
     lateinit var location : Point
 
-    constructor(scooter: ScooterDto, zone:String, company:String) : this(scooter.bikeId, scooter.isDisabled, scooter.isReserved, scooter.lastReported, scooter.currentRangeMeters) {
-        this.zone = zone
+    constructor(scooter: ScooterDto, city:String, company:String) : this(scooter.bikeId, scooter.isDisabled, scooter.isReserved, scooter.lastReported, scooter.currentRangeMeters) {
+        this.city = city
         this.company = company
         val geometryFactory = GeometryFactory(PrecisionModel(), 4326)
         this.location = geometryFactory.createPoint(Coordinate(scooter.longitude, scooter.latitude))

@@ -11,13 +11,13 @@ import org.springframework.stereotype.Repository
 interface ScooterRepository : JpaRepository<Scooter, ScooterId> {
 
     @Query("SELECT s FROM Scooter s WHERE s.isDisabled = false AND s.isReserved = false")
-    fun findAllAvailable(): Iterable<Scooter>
+    fun findAvailable(): Iterable<Scooter>
 
-    @Query("SELECT s FROM Scooter s WHERE s.zone = :zone AND s.isDisabled = false AND s.isReserved = false")
-    fun findAllAvailableByZone(zone: String): Iterable<Scooter>
+    @Query("SELECT s FROM Scooter s WHERE s.city = :city AND s.isDisabled = false AND s.isReserved = false")
+    fun findAvailableByCity(city: String): Iterable<Scooter>
 
     @Query("SELECT s FROM Scooter s WHERE LOWER(s.company) LIKE LOWER(:company) AND s.isDisabled = false AND s.isReserved = false")
-    fun findAllAvailableByCompany(company: String): Iterable<Scooter>
+    fun findAvailableByCompany(company: String): Iterable<Scooter>
 
     @Query(
         value = "SELECT * " +
