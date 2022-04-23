@@ -39,9 +39,22 @@ $ gradle bootrun
 ```
 
 # Usage
-After running the command above go to https://localhost:8080/api/scooter/<**city**>
+After running the command above go to one of the following endpoints
+
+**To get the scooters located in a particular city:**  
+https://localhost:8080/api/scooter/{city}
 > **city** being the name of the area or city where you want to get the scooters.
-  
+
+**To get the scooters from a certain escooter sharing company:**  
+https://localhost:8080/api/scooter?company{company}
+> **company** being the name of the company that you want to get the scooters from.
+
+**To get the scooters located around a certain location:**  
+http://localhost:8980/api/scooter/location?latitude={lat}&longitude={lon}&degree={degree}
+> **lat** being the latitude of where you want the scooters to be near.
+> **lon** being the longitude of where you want the scooters to be near.
+> **degree** being the degree in which you want the scooters to be.
+
 # Featured
   - **Lime**
   - **Pony**
