@@ -24,7 +24,7 @@ class ScooterRestControllerTest(@Autowired val mockMvc: MockMvc) {
         val scooterLime = Scooter("e4abdccb-2353-405e-b796-47fee26945c3", 50.8157, 4.435943, false, false, 1650035878, 8004.0)
         val scooterBird = Scooter("6f0df17f-47c4-418f-addd-24a6318dd927", 51.217471666666675, 4.427905, false, false, 1650035914, 12480.0)
 
-        every { scooterService.getAllScootersBy("brussels")} returns listOf(scooterPony, scooterLime)
+        every { scooterService.findByCity("brussels")} returns listOf(scooterPony, scooterLime)
         mockMvc.perform(get("/api/scooter/brussels").accept(MediaType.APPLICATION_JSON))
             .andExpect(status().isOk)
             .andExpect(content().contentType(MediaType.APPLICATION_JSON))
