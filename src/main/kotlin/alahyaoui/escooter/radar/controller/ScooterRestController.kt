@@ -16,7 +16,7 @@ class ScooterRestController(private val scooterService: ScooterService) {
 
     @GetMapping("/zone")
     fun getScootersByZone(@RequestParam city: String): Iterable<Scooter> {
-        return scooterService.getAllScootersBy(city.toSlug())
+        return scooterService.findByCity(city.toSlug())
     }
 
     @GetMapping("/location")
