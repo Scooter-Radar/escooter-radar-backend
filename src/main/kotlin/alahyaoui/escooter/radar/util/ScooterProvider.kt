@@ -2,9 +2,7 @@ package alahyaoui.escooter.radar.util
 
 import alahyaoui.escooter.radar.entity.Scooter
 import com.fasterxml.jackson.annotation.JsonProperty
-import org.locationtech.jts.geom.Point
-import javax.persistence.Column
-import javax.persistence.Id
+import org.springframework.web.client.RestTemplate
 
 data class ScooterProviderJson(val data: Data)
 
@@ -35,3 +33,39 @@ data class ScooterDto(
     @JsonProperty("last_reported")
     var lastReported: Long,
 )
+
+private val restTemplate = RestTemplate()
+
+public fun getScootersFromLime(city: String): Iterable<Scooter> {
+    val uri = "https://data.lime.bike/api/partners/v2/gbfs/${city}/free_bike_status.json"
+    val response = restTemplate.getForEntity(uri, ScooterProviderJson::class.java)
+    return convertScooterDtoToScooter(response.body?.data?.bikes, city, "Lime")
+}
+
+public fun getScootersFromBird(city: String): Iterable<Scooter> {
+    val uri = "https://mds.bird.co/gbfs/v2/public/${city}/free_bike_status.json"
+    val response = restTemplate.getForEntity(uri, ScooterProviderJson::class.java)
+    return convertScooterDtoToScooter(response.body?.data?.bikes, city, "Bird")
+}
+
+public fun getScootersFromPony(city: String): Iterable<Scooter> {
+    val uri = "https://gbfs.getapony.com/v1/${city}/en/free_bike_status.json"
+    val response = restTemplate.getForEntity(uri, ScooterProviderJson::class.java)
+    return convertScooterDtoToScooter(response.body?.data?.bikes, city, "Pony")
+}
+
+public fun getScootersFromSpin(city: String): Iterable<Scooter> {
+    val uri = "https://gbfs.spin.pm/api/gbfs/v2_2/${city}/free_bike_status"
+    val response = restTemplate.getForEntity(uri, ScooterProviderJson::class.java)
+    return convertScooterDtoToScooter(response.body?.data?.bikes, city, "Spin")
+}
+
+private fun convertScooterDtoToScooter(scootersDto: Array<ScooterDto>?, city: String, company: String): Iterable<Scooter>{
+    val scooters = mutableListOf<Scooter>()
+    if (scootersDto != null) {
+        for(scooter in scootersDto){
+            scooters.add(Scooter(scooter, city, company))
+        }
+    }
+    return scooters
+}
