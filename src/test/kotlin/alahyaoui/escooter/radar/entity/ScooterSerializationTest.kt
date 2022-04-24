@@ -12,13 +12,13 @@ import java.nio.file.Files
 @JsonTest
 class ScooterSerializationTest {
 
-    @Value("classpath:sample_lime.json")
+    @Value("classpath:data:sample_lime.json")
     private lateinit var resource_lime: Resource
 
-    @Value("classpath:sample_pony.json")
+    @Value("classpath:data:sample_pony.json")
     private lateinit var resource_pony: Resource
 
-    @Value("classpath:sample_voi.json")
+    @Value("classpath:data:sample_voi.json")
     private lateinit var resource_voi: Resource
 
     @Autowired
