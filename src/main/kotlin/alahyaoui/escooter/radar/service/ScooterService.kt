@@ -2,15 +2,22 @@ package alahyaoui.escooter.radar.service
 
 import alahyaoui.escooter.radar.entity.Scooter
 import alahyaoui.escooter.radar.repository.ScooterRepository
-import alahyaoui.escooter.radar.util.ScooterDto
-import alahyaoui.escooter.radar.util.ScooterProviderJson
+import alahyaoui.escooter.radar.util.getScootersFromBird
+import alahyaoui.escooter.radar.util.getScootersFromLime
+import alahyaoui.escooter.radar.util.getScootersFromPony
+import alahyaoui.escooter.radar.util.getScootersFromSpin
+import org.apache.commons.csv.CSVFormat
+import org.apache.commons.csv.CSVParser
+import org.springframework.core.io.ClassPathResource
+import org.springframework.scheduling.annotation.Scheduled
 import org.springframework.stereotype.Service
-import org.springframework.web.client.RestTemplate
+import java.io.BufferedReader
+import java.io.FileReader
+import java.util.concurrent.TimeUnit
+
 
 @Service
 class ScooterService(private val db: ScooterRepository) {
-
-    private val restTemplate = RestTemplate()
 
     fun findByCompany(company: String): Iterable<Scooter> {
         return db.findAvailableByCompany(company)
@@ -21,67 +28,30 @@ class ScooterService(private val db: ScooterRepository) {
     }
 
     fun findByCity(city: String): Iterable<Scooter> {
-        val scooters = mutableListOf<Scooter>()
-
-        try {
-            findPony(city)?.let { scooters.addAll(it) }
-        } catch (ex: Exception) {
-            println(ex.message)
-        }
-
-        try {
-            findLime(city)?.let { scooters.addAll(it) }
-        } catch (ex: Exception) {
-            println(ex.message)
-        }
-
-        try {
-            findBird(city)?.let { scooters.addAll(it) }
-        } catch (ex: Exception) {
-            println(ex.message)
-        }
-
-        try {
-            findSpin(city)?.let { scooters.addAll(it) }
-        } catch (ex: Exception) {
-            println(ex.message)
-        }
-
-        db.saveAll(scooters)
         return db.findAvailableByCity(city)
     }
 
-    private fun findLime(city: String): Iterable<Scooter> {
-        val uri = "https://data.lime.bike/api/partners/v2/gbfs/${city}/free_bike_status.json"
-        val response = restTemplate.getForEntity(uri, ScooterProviderJson::class.java)
-        return convertScooterDtoToScooter(response.body?.data?.bikes, city, "Lime")
-    }
+    @Scheduled(fixedDelay = 5, timeUnit = TimeUnit.MINUTES)
+    private fun fetchScootersFromProvidersTask() {
+        val resource = ClassPathResource("data/companies_cities.csv")
+        val bufferedReader = BufferedReader(FileReader(resource.file))
+        val csvParser = CSVParser(bufferedReader, CSVFormat.DEFAULT)
+        for (csvRecord in csvParser) {
+            val company = csvRecord.get(0);
+            val city = csvRecord.get(1);
 
-    private fun findBird(city: String): Iterable<Scooter> {
-        val uri = "https://mds.bird.co/gbfs/v2/public/${city}/free_bike_status.json"
-        val response = restTemplate.getForEntity(uri, ScooterProviderJson::class.java)
-        return convertScooterDtoToScooter(response.body?.data?.bikes, city, "Bird")
-    }
-
-    private fun findPony(city: String): Iterable<Scooter> {
-        val uri = "https://gbfs.getapony.com/v1/${city}/en/free_bike_status.json"
-        val response = restTemplate.getForEntity(uri, ScooterProviderJson::class.java)
-        return convertScooterDtoToScooter(response.body?.data?.bikes, city, "Pony")
-    }
-
-    private fun findSpin(city: String): Iterable<Scooter> {
-        val uri = "https://gbfs.spin.pm/api/gbfs/v2_2/${city}/free_bike_status"
-        val response = restTemplate.getForEntity(uri, ScooterProviderJson::class.java)
-        return convertScooterDtoToScooter(response.body?.data?.bikes, city, "Spin")
-    }
-
-    private fun convertScooterDtoToScooter(scootersDto: Array<ScooterDto>?, city: String, company: String): Iterable<Scooter>{
-        val scooters = mutableListOf<Scooter>()
-        if (scootersDto != null) {
-            for(scooter in scootersDto){
-                scooters.add(Scooter(scooter, city, company))
+            try {
+                val scooters = when (company.lowercase()) {
+                    "pony" -> getScootersFromPony(city)
+                    "lime" -> getScootersFromLime(city)
+                    "bird" -> getScootersFromBird(city)
+                    "spin" -> getScootersFromSpin(city)
+                    else -> continue
+                }
+                db.saveAll(scooters)
+            } catch (ex: Exception) {
+                println("Caused by ${company} for ${city} : ${ex.message}")
             }
         }
-        return scooters
     }
 }
