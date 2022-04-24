@@ -17,7 +17,7 @@ import javax.persistence.Entity
 import javax.persistence.Id
 import javax.persistence.IdClass
 
-class ScooterId: Serializable {
+class ScooterId : Serializable {
     @JsonProperty("bike_id")
     @Column(name = "bike_id")
     lateinit var bikeId: String
@@ -30,44 +30,69 @@ class ScooterId: Serializable {
 @Entity
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
 @IdClass(ScooterId::class)
-class Scooter(
+class Scooter {
     @Id
     @JsonProperty("bike_id")
     @Column(name = "bike_id")
-    var bikeId: String,
+    var bikeId: String
 
-    @JsonProperty("is_disabled")
-    @Column(name = "is_disabled")
-    var isDisabled: Boolean,
-
-    @JsonProperty("is_reserved")
-    @Column(name = "is_reserved")
-    var isReserved: Boolean,
-
-    @JsonProperty("last_reported")
-    @Column(name = "last_reported")
-    var lastReported: Long,
-
-    @JsonProperty("current_range_meters")
-    @Column(name = "current_range_meters")
-    var currentRangeMeters: Double,
-) {
     @Id
     @JsonProperty("company")
     @Column(name = "company")
-    lateinit var company: String
+    var company: String
 
     @JsonProperty("city")
     @Column(name = "city")
-    lateinit var city: String
+    var city: String
 
     @JsonProperty("location")
-    @Column(name="location", columnDefinition = "geometry(Point,4326)")
+    @Column(name = "location", columnDefinition = "geometry(Point,4326)")
     @JsonSerialize(using = GeometrySerializer::class)
     @JsonDeserialize(contentUsing = GeometryDeserializer::class)
-    lateinit var location : Point
+    var location: Point
 
-    constructor(scooter: ScooterDto, city:String, company:String) : this(scooter.bikeId, scooter.isDisabled, scooter.isReserved, scooter.lastReported, scooter.currentRangeMeters) {
+    @JsonProperty("is_disabled")
+    @Column(name = "is_disabled")
+    var isDisabled: Boolean
+
+    @JsonProperty("is_reserved")
+    @Column(name = "is_reserved")
+    var isReserved: Boolean
+
+    @JsonProperty("last_reported")
+    @Column(name = "last_reported")
+    var lastReported: Long
+
+    @JsonProperty("current_range_meters")
+    @Column(name = "current_range_meters")
+    var currentRangeMeters: Double
+
+    constructor(
+        bikeId: String,
+        city: String,
+        company: String,
+        location: Point,
+        isDisabled: Boolean,
+        isReserved: Boolean,
+        lastReported: Long,
+        currentRangeMeters: Double
+    ) {
+        this.bikeId = bikeId
+        this.city = city
+        this.company = company
+        this.location = location
+        this.isDisabled = isDisabled
+        this.isReserved = isReserved
+        this.lastReported = lastReported
+        this.currentRangeMeters = currentRangeMeters
+    }
+
+    constructor(scooter: ScooterDto, city: String, company: String) {
+        this.bikeId = scooter.bikeId
+        this.isDisabled = scooter.isDisabled
+        this.isReserved = scooter.isReserved
+        this.lastReported = scooter.lastReported
+        this.currentRangeMeters = scooter.currentRangeMeters
         this.city = city
         this.company = company
         val geometryFactory = GeometryFactory(PrecisionModel(), 4326)
