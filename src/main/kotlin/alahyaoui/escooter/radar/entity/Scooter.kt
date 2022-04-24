@@ -57,8 +57,8 @@ class Scooter(
     @Column(name = "company")
     lateinit var company: String
 
-    @JsonProperty("zone")
-    @Column(name = "zone")
+    @JsonProperty("city")
+    @Column(name = "city")
     lateinit var city: String
 
     @JsonProperty("location")
