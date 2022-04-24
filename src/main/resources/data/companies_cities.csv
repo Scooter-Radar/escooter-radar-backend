@@ -1,7 +1,6 @@
 company, city
 pony, brussels
 pony, liege
-pony, oxford
 pony, Angers
 pony, bordeaux
 pony, Grenoble
@@ -70,7 +69,6 @@ lime, san_francisco
 lime, san_jose 
 lime, seattle 
 lime, washington_dc
-lime, oslo 
 spin, basildon
 spin, chelmsford
 spin, clacton
@@ -105,7 +103,7 @@ spin, fayetteville
 spin, fort_collins
 spin, fort_pierce
 spin, gainesville
-spin, garden city
+spin, garden_city
 spin, grand_rapids
 spin, greenville
 spin, isla_vista
