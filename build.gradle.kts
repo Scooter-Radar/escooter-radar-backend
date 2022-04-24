@@ -40,6 +40,9 @@ dependencies {
 	implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
 	implementation("com.graphhopper.external:jackson-datatype-jts:0.10-2.5-1")
 
+	// CSV Dependencies
+	implementation("org.apache.commons:commons-csv:1.5")
+
 	// Spring Boot dependencies
 	implementation("org.springframework.boot:spring-boot-starter-data-jpa")
 	implementation("org.springframework.boot:spring-boot-starter-mustache")
