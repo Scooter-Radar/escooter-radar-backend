@@ -36,6 +36,8 @@ class ScooterService(private val db: ScooterRepository) {
         val resource = ClassPathResource("data/companies_cities.csv")
         val bufferedReader = BufferedReader(FileReader(resource.file))
         val csvParser = CSVParser(bufferedReader, CSVFormat.DEFAULT)
+
+        db.deleteAll()
         for (csvRecord in csvParser) {
             val company = csvRecord.get(0);
             val city = csvRecord.get(1);
