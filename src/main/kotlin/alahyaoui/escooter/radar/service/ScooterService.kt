@@ -13,6 +13,7 @@ import org.springframework.scheduling.annotation.Scheduled
 import org.springframework.stereotype.Service
 import java.io.BufferedReader
 import java.io.FileReader
+import java.io.InputStreamReader
 import java.util.concurrent.TimeUnit
 
 
@@ -34,13 +35,13 @@ class ScooterService(private val db: ScooterRepository) {
     @Scheduled(fixedDelay = 5, timeUnit = TimeUnit.MINUTES)
     private fun fetchScootersFromProvidersTask() {
         val resource = ClassPathResource("data/companies_cities.csv")
-        val bufferedReader = BufferedReader(FileReader(resource.file))
+        val bufferedReader = BufferedReader(InputStreamReader(resource.inputStream))
         val csvParser = CSVParser(bufferedReader, CSVFormat.DEFAULT)
 
         db.deleteAll()
         for (csvRecord in csvParser) {
-            val company = csvRecord.get(0);
-            val city = csvRecord.get(1);
+            val company = csvRecord.get(0)
+            val city = csvRecord.get(1)
 
             try {
                 val scooters = when (company.lowercase()) {
