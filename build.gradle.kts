@@ -27,6 +27,9 @@ dependencies {
 	implementation("org.jetbrains.kotlin:kotlin-reflect")
 	implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
 
+	// Coroutines Dependencies
+	implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core")
+
 	// Hibernate Dependencies
 	implementation("org.hibernate:hibernate-spatial")
 
