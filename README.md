@@ -24,30 +24,35 @@ Scooter-sharing systems work towards providing the public with a fast and conven
 http://escooter-radar-backend-env.eba-gkj72vkn.eu-west-3.elasticbeanstalk.com/
 
 ## API Routes
-- api/scooter/zone?city={city}
-> **city** being the name of the area or city where you want to get the scooters.
-
-
 - api/scooter/provider?company={company}
 > **company** being the name of the company that you want to get the scooters from.
 
-
-- api/scooter/location?latitude={lat}&longitude={lon}&degree={degree}
-> **lat** being the latitude of where you want the scooters to be near.
-> **lon** being the longitude of where you want the scooters to be near.
-> **degree** being the degree in which you want the scooters to be.
-
-## Endopoints Examples
-**Getting the e-scooters in Brussels :**
-> http://escooter-radar-backend-env.eba-gkj72vkn.eu-west-3.elasticbeanstalk.com/api/scooter/zone?city=brussels  
+- api/scooter/location/zone?city={city}
+> **city** being the name of the area or city where you want to get the scooters.
 
 
+- api/scooter/location/within?latitude={lat}&longitude={lon}&degree={degree}
+> **lat** being the latitude of where you want the scooters to be near.  
+> **lon** being the longitude of where you want the scooters to be near.  
+> **degree** being the degree in which you want the scooters to be.  
+
+- api/scooter/location/near?latitude={lat}&longitude={lon}&limit={nbOfScooters}
+> **lat** being the latitude of where you want the scooters to be near.  
+> **lon** being the longitude of where you want the scooters to be near.  
+> **nbOfScooters** being the number of scooters near the location you want to get.  
+
+## Endpoints Examples
 **Getting all Pony e-scooters :**
 > http://escooter-radar-backend-env.eba-gkj72vkn.eu-west-3.elasticbeanstalk.com/api/scooter/provider?company=Pony  
 
+**Getting the e-scooters in Brussels :**
+> http://escooter-radar-backend-env.eba-gkj72vkn.eu-west-3.elasticbeanstalk.com/api/scooter/location/zone?city=brussels  
 
-**Getting all the e-scooters within a distance of 5,55 km from a location :**  
-> http://escooter-radar-backend-env.eba-gkj72vkn.eu-west-3.elasticbeanstalk.com/api/scooter/location?latitude=50.85045&longitude=4.34878&degree=0.05
+**Getting all the e-scooters within a distance of 5,55 km of a given location :**  
+> http://escooter-radar-backend-env.eba-gkj72vkn.eu-west-3.elasticbeanstalk.com/api/scooter/location/within?latitude=50.85045&longitude=4.34878&degree=0.05  
+
+**Getting the 100 nearest e-scooters to a given location :**  
+> http://escooter-radar-backend-env.eba-gkj72vkn.eu-west-3.elasticbeanstalk.com/api/scooter/location/near?latitude=50.85045&longitude=4.34878&limit=100
 
 ## Converting distance from kilometer to degree
 
@@ -60,6 +65,19 @@ http://escooter-radar-backend-env.eba-gkj72vkn.eu-west-3.elasticbeanstalk.com/
 | 0.0001°  	| 11.1 m	|
 | 0.00001°  | 1.11 m	|
 | 0.000001° | 0.11 m	|
+
+## JSON Scheme of an e-scooter
+
+{  
+  "bike_id":"cdd2f513-216c-4014-b73e-f2882f08658f",  
+  "company":"Lime",  
+  "city":"brussels",  
+  "location":{"type":"Point","coordinates":[4.391533,50.894786]},  
+  "is_disabled":false,  
+  "is_reserved":false,  
+  "last_reported":1651661817,  
+  "current_range_meters":8571.0  
+}
 
 # Test it yourself
 
@@ -93,14 +111,17 @@ $ gradle bootrun
 ## Usage
 After running the command above go to one of the following endpoints
 
-**To get the scooters located in a particular city:**  
-https://localhost:8980/api/scooter/zone?city={city}
-
-**To get the scooters from a certain escooter sharing company:**  
+**To get the e-scooters from a certain escooter sharing company:**  
 https://localhost:8980/api/scooter/provider?company={company}
 
-**To get the scooters located around a certain location:**  
-http://localhost:8980/api/scooter/location?latitude={lat}&longitude={lon}&degree={degree}
+**To get the e-scooters located in a particular city:**  
+https://localhost:8980/api/scooter/location/zone?city={city}
+
+**To get the e-scooters located around a certain location:**  
+http://localhost:8980/api/scooter/location/within?latitude={lat}&longitude={lon}&degree={degree}
+
+**To get the x nearest e-scooters a certain location:**  
+http://localhost:8980/api/scooter/location/near?latitude={lat}&longitude={lon}&limit={nbOfScooters}
 
 # Featured
   - **Lime**
