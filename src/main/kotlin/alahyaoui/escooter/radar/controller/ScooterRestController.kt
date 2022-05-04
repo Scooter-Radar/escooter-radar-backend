@@ -14,12 +14,12 @@ class ScooterRestController(private val scooterService: ScooterService) {
         return scooterService.findByCompany(company.toSlug())
     }
 
-    @GetMapping("/zone")
+    @GetMapping("/location/zone")
     fun getScootersByZone(@RequestParam city: String): Iterable<Scooter> {
         return scooterService.findByCity(city.toSlug())
     }
 
-    @GetMapping("/location")
+    @GetMapping("/location/within")
     fun getScootersByLocationWithinDegree(@RequestParam latitude: Double, @RequestParam longitude: Double, @RequestParam degree: Double): Iterable<Scooter> {
         return scooterService.findByLocationWithinDegree(latitude, longitude, degree)
     }
