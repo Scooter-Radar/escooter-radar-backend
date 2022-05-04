@@ -27,4 +27,16 @@ interface ScooterRepository : JpaRepository<Scooter, ScooterId> {
         nativeQuery = true
     )
     fun findAvailableByLocationWithinDegree(latitude: Double, longitude: Double, degree: Double): Iterable<Scooter>
+
+    @Query(
+        value = "SELECT bike_id, company, city, location, is_disabled, is_reserved, last_reported, current_range_meters " +
+                "FROM (SELECT *, location <-> ST_SetSRID(ST_MakePoint(:longitude, :latitude), 4326) AS distance " +
+                        "FROM Scooter " +
+                        "WHERE is_disabled = false AND is_reserved = false " +
+                        "ORDER BY distance " +
+                        "LIMIT :limit " +
+                ") AS NEAREST_SCOOTERS",
+        nativeQuery = true
+    )
+    fun findAvailableNearest(latitude: Double, longitude: Double, limit: Int): Iterable<Scooter>
 }
