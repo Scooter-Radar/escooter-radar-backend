@@ -29,6 +29,10 @@ class ScooterService(private val db: ScooterRepository) {
         return db.findAvailableByLocationWithinDegree(latitude, longitude, degree)
     }
 
+    fun findByLocationNear(latitude: Double, longitude: Double, limit: Int): Iterable<Scooter> {
+        return db.findAvailableNearest(latitude, longitude, limit)
+    }
+
     fun findByCity(city: String): Iterable<Scooter> {
         return db.findAvailableByCity(city)
     }
