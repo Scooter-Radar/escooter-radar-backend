@@ -36,25 +36,35 @@ data class ScooterDto(
 
 private val restTemplate = RestTemplate()
 
-public fun getScootersFromLime(city: String): Iterable<Scooter> {
+public fun fetchScooters(company: String, city: String): Iterable<Scooter> {
+    return when (company.lowercase()) {
+        "lime" -> fetchScootersFromLime(city)
+        "bird" -> fetchScootersFromBird(city)
+        "pony" -> fetchScootersFromPony(city) 
+        "spin" -> fetchScootersFromSpin(city)
+        else -> mutableListOf()
+    }
+}
+
+private fun fetchScootersFromLime(city: String): Iterable<Scooter> {
     val uri = "https://data.lime.bike/api/partners/v2/gbfs/${city}/free_bike_status.json"
     val response = restTemplate.getForEntity(uri, ScooterProviderJson::class.java)
     return convertScooterDtoToScooter(response.body?.data?.bikes, city, "Lime")
 }
 
-public fun getScootersFromBird(city: String): Iterable<Scooter> {
+private fun fetchScootersFromBird(city: String): Iterable<Scooter> {
     val uri = "https://mds.bird.co/gbfs/v2/public/${city}/free_bike_status.json"
     val response = restTemplate.getForEntity(uri, ScooterProviderJson::class.java)
     return convertScooterDtoToScooter(response.body?.data?.bikes, city, "Bird")
 }
 
-public fun getScootersFromPony(city: String): Iterable<Scooter> {
+private fun fetchScootersFromPony(city: String): Iterable<Scooter> {
     val uri = "https://gbfs.getapony.com/v1/${city}/en/free_bike_status.json"
     val response = restTemplate.getForEntity(uri, ScooterProviderJson::class.java)
     return convertScooterDtoToScooter(response.body?.data?.bikes, city, "Pony")
 }
 
-public fun getScootersFromSpin(city: String): Iterable<Scooter> {
+private fun fetchScootersFromSpin(city: String): Iterable<Scooter> {
     val uri = "https://gbfs.spin.pm/api/gbfs/v2_2/${city}/free_bike_status"
     val response = restTemplate.getForEntity(uri, ScooterProviderJson::class.java)
     return convertScooterDtoToScooter(response.body?.data?.bikes, city, "Spin")

@@ -53,13 +53,7 @@ class ScooterService(private val db: ScooterRepository) {
                 val company = csvRecord.get(0)
                 val city = csvRecord.get(1)
                 try {
-                    val scooters = when (company.lowercase()) {
-                        "pony" -> getScootersFromPony(city)
-                        "lime" -> getScootersFromLime(city)
-                        "bird" -> getScootersFromBird(city)
-                        "spin" -> getScootersFromSpin(city)
-                        else -> mutableListOf()
-                    }
+                    val scooters = fetchScooters(company, city)
                     db.saveAll(scooters)
                 } catch (ex: Exception) {
                     println("Caused by ${company} for ${city} : ${ex.message}")
