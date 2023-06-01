@@ -1,0 +1,12 @@
+Country Code,Name,Location,System ID,URL,Auto-Discovery URL,Validation Report
+FR,Pony Angers,"Angers, FR",pony_Angers,https://getapony.com/,https://gbfs.getapony.com/v1/angers/en/gbfs.json,https://gbfs-validator.netlify.app/?url=https%3A%2F%2Fgbfs.getapony.com%2Fv1%2Fangers%2Fen%2Fgbfs.json
+FR,Pony Bordeaux,"Bordeaux, FR",pony_bordeaux,https://getapony.com/,https://gbfs.getapony.com/v1/bordeaux/en/gbfs.json,https://gbfs-validator.netlify.app/?url=https%3A%2F%2Fgbfs.getapony.com%2Fv1%2Fbordeaux%2Fen%2Fgbfs.json
+FR,Pony Evry,"Evry, FR",pony_Evry,https://getapony.com/,https://gbfs.getapony.com/v1/evry/en/gbfs.json,https://gbfs-validator.netlify.app/?url=https%3A%2F%2Fgbfs.getapony.com%2Fv1%2Fevry%2Fen%2Fgbfs.json
+FR,Pony Grenoble,"Grenoble, FR",pony_Grenoble,https://getapony.com,https://gbfs.getapony.com/v1/grenoble/en/gbfs.json,https://gbfs-validator.netlify.app/?url=https%3A%2F%2Fgbfs.getapony.com%2Fv1%2Fgrenoble%2Fen%2Fgbfs.json
+FR,pony,"Lorient, FR",pony_Lorient,https://getapony.com/,https://gbfs.getapony.com/v1/lorient/en/gbfs.json,https://gbfs-validator.netlify.app/?url=https%3A%2F%2Fgbfs.getapony.com%2Fv1%2Florient%2Fen%2Fgbfs.json
+FR,pony,"Olivet, FR",pony_Olivet,https://getapony.com/,https://gbfs.getapony.com/v1/olivet/en/gbfs.json,https://gbfs-validator.netlify.app/?url=https%3A%2F%2Fgbfs.getapony.com%2Fv1%2Folivet%2Fen%2Fgbfs.json
+FR,Pony Paris,"Paris, FR",pony_paris,https://getapony.com/,https://gbfs.getapony.com/v1/paris/en/gbfs.json,https://gbfs-validator.netlify.app/?url=https%3A%2F%2Fgbfs.getapony.com%2Fv1%2Fparis%2Fen%2Fgbfs.json
+FR,Pony Poitiers,"Poitiers,FR",pony_poitiers,https://getapony.com/,https://gbfs.getapony.com/v1/poitiers/en/gbfs.json,https://gbfs-validator.netlify.app/?url=https%3A%2F%2Fgbfs.getapony.com%2Fv1%2Fpoitiers%2Fen%2Fgbfs.json
+BE,Pony Brussels,"Bruxelles, BE",pony_brussels,https://getapony.com,https://gbfs.getapony.com/v1/brussels/en/gbfs.json,https://gbfs-validator.netlify.app/?url=https%3A%2F%2Fgbfs.getapony.com%2Fv1%2Fbrussels%2Fen%2Fgbfs.json
+BE,Pony Liège,"Liège, BE",pony_liège,https://getapony.com,https://gbfs.getapony.com/v1/liege/en/gbfs.json,https://gbfs-validator.netlify.app/?url=https%3A%2F%2Fgbfs.getapony.com%2Fv1%2Fliege%2Fen%2Fgbfs.json
+BE,Pony Namur,"Namur, BE",pony_Namur,https://getapony.com/,https://gbfs.getapony.com/v1/namur/en/gbfs.json,https://gbfs-validator.netlify.app/?url=https%3A%2F%2Fgbfs.getapony.com%2Fv1%2Fnamur%2Fen%2Fgbfs.json
