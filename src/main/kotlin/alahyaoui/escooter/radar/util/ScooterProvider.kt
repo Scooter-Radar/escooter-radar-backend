@@ -40,7 +40,7 @@ public fun fetchScooters(company: String, city: String): Iterable<Scooter> {
     return when (company.lowercase()) {
         "lime" -> fetchScootersFromLime(city)
         "bird" -> fetchScootersFromBird(city)
-        "pony" -> fetchScootersFromPony(city) 
+        "pony" -> fetchScootersFromPony(city)
         "spin" -> fetchScootersFromSpin(city)
         else -> mutableListOf()
     }
