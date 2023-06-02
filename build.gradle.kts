@@ -46,7 +46,7 @@ dependencies {
 	// CSV Dependencies
 	implementation("org.apache.commons:commons-csv:1.5")
 
-	// Spring Boot dependencies
+	// Spring Boot Dependencies
 	implementation("org.springframework.boot:spring-boot-starter-data-jpa")
 	implementation("org.springframework.boot:spring-boot-starter-web")
 	developmentOnly("org.springframework.boot:spring-boot-devtools")
