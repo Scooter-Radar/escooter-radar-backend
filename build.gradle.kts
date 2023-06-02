@@ -48,9 +48,12 @@ dependencies {
 
 	// Spring Boot dependencies
 	implementation("org.springframework.boot:spring-boot-starter-data-jpa")
-	implementation("org.springframework.boot:spring-boot-starter-mustache")
 	implementation("org.springframework.boot:spring-boot-starter-web")
 	developmentOnly("org.springframework.boot:spring-boot-devtools")
+
+	// SpringDoc OpenApi Dependencies
+	implementation("org.springdoc:springdoc-openapi-ui:1.6.15")
+	implementation("org.springdoc:springdoc-openapi-kotlin:1.6.15")
 
 	// Test Dependencies
 	testImplementation("org.springframework.boot:spring-boot-starter-test")
