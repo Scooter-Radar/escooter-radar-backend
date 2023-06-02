@@ -1,6 +1,4 @@
 Country Code,Name,Location,System ID,URL,Auto-Discovery URL,Scooter URL
-DE,Tier Aachen,"Aachen, DE",openvelo_aachen_tier,https://www.tier.app,https://nitro.openvelo.org/aachen/tier/v2/gbfs.json,https://nitro.openvelo.org/aachen/tier/v2/free_bike_status.json
-FR,Tier GRENOBLE,"Grenoble, FR",tier_GRENOBLE,https://www.tier.app,https://data.mobilites-m.fr/api/gbfs/tier_grenoble/gbfs,https://data.mobilites-m.fr/api/gbfs/tier_grenoble/free_bike_status.json
 NO,Tier Asker,"Asker, NO",tierasker,https://www.tier.app/,https://api.entur.io/mobility/v2/gbfs/tierasker/gbfs,https://api.entur.io/mobility/v2/gbfs/tierasker/free_bike_status.json
 NO,Tier Baerum,"Baerum, NO",tierbaerum,https://www.tier.app/,https://api.entur.io/mobility/v2/gbfs/tierbaerum/gbfs,https://api.entur.io/mobility/v2/gbfs/tierbaerum/free_bike_status.json
 NO,Tier Drammen,"Drammen, NO",tierdrammen,https://www.tier.app/,https://api.entur.io/mobility/v2/gbfs/tierdrammen/gbfs,https://api.entur.io/mobility/v2/gbfs/tierdrammen/free_bike_status.json
