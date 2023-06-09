@@ -13,8 +13,8 @@ interface ScooterRepository : JpaRepository<Scooter, ScooterId> {
     @Query("SELECT s FROM Scooter s WHERE s.isDisabled = false AND s.isReserved = false")
     fun findAvailable(): Iterable<Scooter>
 
-    @Query("SELECT s FROM Scooter s WHERE s.city = :city AND s.isDisabled = false AND s.isReserved = false")
-    fun findAvailableByCity(city: String): Iterable<Scooter>
+    @Query("SELECT s FROM Scooter s WHERE LOWER(s.address) LIKE LOWER(concat('%', :address, '%')) AND s.isDisabled = false AND s.isReserved = false")
+    fun findAvailableByAddress(address: String): Iterable<Scooter>
 
     @Query("SELECT s FROM Scooter s WHERE LOWER(s.company) LIKE LOWER(:company) AND s.isDisabled = false AND s.isReserved = false")
     fun findAvailableByCompany(company: String): Iterable<Scooter>
@@ -29,7 +29,7 @@ interface ScooterRepository : JpaRepository<Scooter, ScooterId> {
     fun findAvailableByLocationWithinDegree(latitude: Double, longitude: Double, degree: Double): Iterable<Scooter>
 
     @Query(
-        value = "SELECT bike_id, company, city, location, is_disabled, is_reserved, last_reported, current_range_meters " +
+        value = "SELECT * " +
                 "FROM (SELECT *, location <-> ST_SetSRID(ST_MakePoint(:longitude, :latitude), 4326) AS distance " +
                         "FROM Scooter " +
                         "WHERE is_disabled = false AND is_reserved = false " +
