@@ -1,0 +1,100 @@
+[
+  {
+    "bike_id": "e93e2021-6fb2-42b7-9496-1a37e1fd65ac",
+    "lat": 38.803047183333334,
+    "lon": -77.04003906666667,
+    "is_disabled": false,
+    "is_reserved": false,
+    "vehicle_type_id": "bae2102b-56ba-42ba-9097-720e5990b4b2",
+    "last_reported": 1685649566,
+    "current_range_meters": 29722.0,
+    "current_fuel_percent": 0.875,
+    "pricing_plan_id": "5c469505-2249-4383-9f13-8e4fd1430b0d"
+  },
+  {
+    "bike_id": "ead43318-5226-4680-a409-0321a5326ded",
+    "current_range_meters": 8880,
+    "is_disabled": false,
+    "is_reserved": false,
+    "last_reported": 1685649162,
+    "lat": 50.867075,
+    "lon": 4.36102,
+    "pricing_plan_id": "31531fbf-77ec-4002-a635-ebe80880ac44",
+    "rental_uris": {
+      "android": "https://go.ridedott.com/vehicles/ead43318-5226-4680-a409-0321a5326ded?platform=android",
+      "ios": "https://go.ridedott.com/vehicles/ead43318-5226-4680-a409-0321a5326ded?platform=ios"
+    },
+    "vehicle_type_id": "dott_scooter"
+  },
+  {
+    "bike_id": "b03dbd4a-e01f-4994-901b-9a3aa299d5dd",
+    "lat": 51.25535,
+    "lon": 4.44704,
+    "is_reserved": false,
+    "is_disabled": false,
+    "current_range_meters": 10200,
+    "vehicle_type_id": "2",
+    "last_reported": 1685649704,
+    "vehicle_type": "scooter"
+  },
+  {
+    "is_reserved": 0,
+    "fusion_lat": 0.0,
+    "bike_id": "acb4d3dc9a8dc4164803e5773ecc18b2",
+    "type": "electric_bike",
+    "is_disabled": 0,
+    "fusion_lon": 0.0,
+    "lat": 38.980816833333336,
+    "name": "acb4d3dc9a8dc4164803e5773ecc18b2",
+    "rental_uris": {
+      "ios": "https://dc.lft.to/lastmile_qr_scan",
+      "android": "https://dc.lft.to/lastmile_qr_scan"
+    },
+    "lon": -76.93172266666667
+  },
+  {
+    "bike_id": "pony_9d149f3af66c490f86178d2511c29bd8",
+    "current_fuel_percent": 0.75,
+    "current_range_meters": 18760.0,
+    "is_disabled": false,
+    "is_reserved": false,
+    "last_reported": 1685649797,
+    "lat": 47.47442,
+    "lon": -0.55227,
+    "pricing_plan_id": "Angers_scooter",
+    "rental_uris": {
+      "android": "https://getapony.com/app/scan",
+      "ios": "https://getapony.com/app/scan"
+    },
+    "system_id": "f190d330-b49e-4590-871b-0bcbec565a8c",
+    "vehicle_type_id": "scooter"
+  },
+  {
+    "bike_id": "ae0be9ed-36ff-4841-8b13-2def9abd0b43",
+    "lat": 27.932786,
+    "lon": -82.457492,
+    "is_reserved": false,
+    "is_disabled": false,
+    "rental_uris": {
+      "android": "https://spin.onelink.me/e2Wc?pid=gbfs\u0026c=Customizable%20GBFS%20deeplink\u0026is_retargeting=true\u0026deep_link_value=pm.spin%3A%2F%2FfindVehicle\u0026af_dp=pm.spin%3A%2F%2F\u0026vehicle_id=ae0be9ed-36ff-4841-8b13-2def9abd0b43",
+      "ios": "https://spin.onelink.me/e2Wc?pid=gbfs\u0026c=Customizable%20GBFS%20deeplink\u0026is_retargeting=true\u0026deep_link_value=pm.spin%3A%2F%2FfindVehicle\u0026af_dp=pm.spin%3A%2F%2F\u0026vehicle_id=ae0be9ed-36ff-4841-8b13-2def9abd0b43"
+    },
+    "vehicle_type_id": "1",
+    "current_range_meters": 13680,
+    "last_reported": 1685649819
+  },
+  {
+    "bike_id": "YTI:Vehicle:3c7146dc5ad0d93bb6bd816308cfe4d3bd42739b81647529ec7595b450573f9d",
+    "lat": 59.859017,
+    "lon": 10.483272,
+    "is_reserved": false,
+    "is_disabled": false,
+    "rental_uris": {
+      "android": "https://tier.page.link/Vbaff",
+      "ios": "https://tier.page.link/Vbaff"
+    },
+    "vehicle_type_id": "YTI:VehicleType:escooter_asker",
+    "current_range_meters": 21000,
+    "pricing_plan_id": "YTI:PricingPlan:dd8616ef-e170-430f-9a51-701f482909ed"
+  }
+]
