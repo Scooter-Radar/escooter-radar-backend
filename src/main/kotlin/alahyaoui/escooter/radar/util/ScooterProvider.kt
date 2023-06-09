@@ -1,8 +1,17 @@
 package alahyaoui.escooter.radar.util
 
+import alahyaoui.escooter.radar.entity.RentalUris
 import alahyaoui.escooter.radar.entity.Scooter
 import com.fasterxml.jackson.annotation.JsonProperty
+import kotlinx.coroutines.delay
+import org.apache.commons.csv.CSVFormat
+import org.apache.commons.csv.CSVParser
+import org.springframework.core.io.ClassPathResource
+import org.springframework.web.client.HttpStatusCodeException
 import org.springframework.web.client.RestTemplate
+import java.io.BufferedReader
+import java.io.InputStreamReader
+import java.util.*
 
 data class ScooterProviderJson(val data: Data)
 
@@ -10,71 +19,74 @@ data class Data(val bikes: Array<ScooterDto>)
 
 data class ScooterDto(
     @JsonProperty("bike_id")
-    var bikeId: String,
+    val bikeId: String,
 
     @JsonProperty("lat")
-    var latitude: Double,
+    val latitude: Double,
 
     @JsonProperty("lon")
-    var longitude: Double,
-
-    @JsonProperty("is_reserved")
-    var isReserved: Boolean,
+    val longitude: Double,
 
     @JsonProperty("is_disabled")
-    var isDisabled: Boolean,
+    val isDisabled: Boolean,
 
-    @JsonProperty("current_range_meters")
-    var currentRangeMeters: Double,
-
-    @JsonProperty("vehicle_type_id")
-    var vehicleTypeId: String,
+    @JsonProperty("is_reserved")
+    val isReserved: Boolean,
 
     @JsonProperty("last_reported")
-    var lastReported: Long,
+    val lastReported: Long?,
+
+    @JsonProperty("current_range_meters")
+    val currentRangeMeters: Double?,
+
+    @JsonProperty("pricing_plan_id")
+    val pricingPlanId: String?,
+
+    @JsonProperty("rental_uris")
+    val rentalUris: RentalUris?,
 )
 
 private val restTemplate = RestTemplate()
 
-public fun fetchScooters(company: String, city: String): Iterable<Scooter> {
-    return when (company.lowercase()) {
-        "lime" -> fetchScootersFromLime(city)
-        "bird" -> fetchScootersFromBird(city)
-        "pony" -> fetchScootersFromPony(city)
-        "spin" -> fetchScootersFromSpin(city)
-        else -> mutableListOf()
-    }
-}
+suspend fun fetchScootersFromProviders(company: String, filePath: String): Iterable<Scooter> {
+    val resource = ClassPathResource("data/$filePath.csv")
+    val bufferedReader = BufferedReader(InputStreamReader(resource.inputStream))
+    val csvParser = CSVParser(bufferedReader, CSVFormat.EXCEL.withFirstRecordAsHeader())
 
-private fun fetchScootersFromLime(city: String): Iterable<Scooter> {
-    val uri = "https://data.lime.bike/api/partners/v2/gbfs/${city}/free_bike_status.json"
-    val response = restTemplate.getForEntity(uri, ScooterProviderJson::class.java)
-    return convertScooterDtoToScooter(response.body?.data?.bikes, city, "Lime")
-}
-
-private fun fetchScootersFromBird(city: String): Iterable<Scooter> {
-    val uri = "https://mds.bird.co/gbfs/v2/public/${city}/free_bike_status.json"
-    val response = restTemplate.getForEntity(uri, ScooterProviderJson::class.java)
-    return convertScooterDtoToScooter(response.body?.data?.bikes, city, "Bird")
-}
-
-private fun fetchScootersFromPony(city: String): Iterable<Scooter> {
-    val uri = "https://gbfs.getapony.com/v1/${city}/en/free_bike_status.json"
-    val response = restTemplate.getForEntity(uri, ScooterProviderJson::class.java)
-    return convertScooterDtoToScooter(response.body?.data?.bikes, city, "Pony")
-}
-
-private fun fetchScootersFromSpin(city: String): Iterable<Scooter> {
-    val uri = "https://gbfs.spin.pm/api/gbfs/v2_2/${city}/free_bike_status"
-    val response = restTemplate.getForEntity(uri, ScooterProviderJson::class.java)
-    return convertScooterDtoToScooter(response.body?.data?.bikes, city, "Spin")
-}
-
-private fun convertScooterDtoToScooter(scootersDto: Array<ScooterDto>?, city: String, company: String): Iterable<Scooter>{
     val scooters = mutableListOf<Scooter>()
-    if (scootersDto != null) {
-        for(scooter in scootersDto){
-            scooters.add(Scooter(scooter, city, company))
+
+    for (csvRecord in csvParser) {
+        val address = csvRecord.get("Location")
+        val countryCode = csvRecord.get("Country Code")
+        val scooterUrl = csvRecord.get("Scooter URL")
+
+        try {
+            var response = restTemplate.getForEntity(scooterUrl, ScooterProviderJson::class.java)
+            if (response.statusCodeValue == 429) {
+                println("Too Many Requests will delay and retry ${response.statusCode}")
+                delay(9000)
+                response = restTemplate.getForEntity(scooterUrl, ScooterProviderJson::class.java)
+            }
+            scooters.addAll(convertScooterDtoToScooter(response.body?.data?.bikes, company, address, countryCode))
+        } catch (err: HttpStatusCodeException) {
+            //err.printStackTrace()
+            println("Error while fetching from $company: ${err.message}")
+        }
+    }
+    println("Number of fetched scooter for $company is ${scooters.size}")
+    return scooters
+}
+
+private fun convertScooterDtoToScooter(
+    scooterDtos: Array<ScooterDto>?,
+    company: String,
+    address: String,
+    countryCode: String
+): Iterable<Scooter> {
+    val scooters = mutableListOf<Scooter>()
+    if (scooterDtos != null) {
+        for (scooterDto in scooterDtos) {
+            scooters.add(Scooter(scooter = scooterDto, company = company, address = address, countryCode = countryCode))
         }
     }
     return scooters
